@@ -26,7 +26,7 @@ else:
 ext_modules = [
     Extension(
         'pyfhog._pyfhog',
-        ['src/cpp/fhog_wrapper.cpp', 'src/cpp/dlib_config.cpp'],
+        ['src/cpp/fhog_wrapper.cpp'],
         include_dirs=include_dirs,
         language='c++',
         extra_compile_args=extra_compile_args,
