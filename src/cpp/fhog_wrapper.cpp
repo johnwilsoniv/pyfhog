@@ -1,8 +1,3 @@
-// Disable dlib's version mismatch and assertion checking to avoid linker issues
-// These must be defined before including any dlib headers
-#define USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1_ DLIB_NO_WARN_UNUSED static const int dlib_check_assert_value = 0
-#define DLIB_VERSION_MISMATCH_CHECK__EXPECTED_VERSION_19_13_0 DLIB_NO_WARN_UNUSED static const int dlib_check_version_value = 0
-
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include "dlib/image_transforms/fhog.h"
