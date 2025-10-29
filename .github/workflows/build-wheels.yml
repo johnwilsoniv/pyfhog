@@ -42,7 +42,7 @@ jobs:
           CIBW_BEFORE_BUILD: "pip install pybind11 numpy"
 
           # Run tests after building
-          CIBW_TEST_COMMAND: "python -c 'import pyfhog; import numpy as np; img = np.random.randint(0, 255, (112, 112, 3), dtype=np.uint8); features = pyfhog.extract_fhog_features(img); assert features.shape == (4464,), f\"Expected (4464,) got {features.shape}\"; print(f\"✓ Test passed: {features.shape}\")'"
+          CIBW_TEST_COMMAND: "python -c \"import pyfhog; import numpy as np; img = np.random.randint(0, 255, (112, 112, 3), dtype=np.uint8); features = pyfhog.extract_fhog_features(img); print('Test passed:', features.shape); assert features.shape == (4464,)\""
           CIBW_TEST_REQUIRES: "numpy"
 
       - uses: actions/upload-artifact@v4
