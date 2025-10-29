@@ -1,3 +1,8 @@
+// Dlib configuration - must come before any dlib includes
+#define DLIB_NO_GUI_SUPPORT
+#define DLIB_USE_BLAS
+#define DLIB_USE_LAPACK
+
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include "dlib/image_transforms/fhog.h"
