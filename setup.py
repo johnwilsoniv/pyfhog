@@ -1,6 +1,7 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys
+import platform
 import setuptools
 import pybind11
 
@@ -12,13 +13,25 @@ include_dirs = [
     "src/cpp",  # For vendored dlib headers
 ]
 
+# Platform-specific compiler flags
+extra_compile_args = []
+extra_link_args = []
+define_macros = [('DLIB_NO_GUI_SUPPORT', None)]
+
+if platform.system() == 'Windows':
+    extra_compile_args = ['/std:c++14', '/O2', '/DDLIB_NO_GUI_SUPPORT']
+else:
+    extra_compile_args = ['-std=c++14', '-O3', '-DDLIB_NO_GUI_SUPPORT']
+
 ext_modules = [
     Extension(
         'pyfhog._pyfhog',
         ['src/cpp/fhog_wrapper.cpp'],
         include_dirs=include_dirs,
         language='c++',
-        extra_compile_args=['-std=c++14', '-O3'],  # Optimization
+        extra_compile_args=extra_compile_args,
+        extra_link_args=extra_link_args,
+        define_macros=define_macros,
     ),
 ]
 
