@@ -1,0 +1,8 @@
+include README.md
+include LICENSE
+include pyproject.toml
+recursive-include src/cpp *.h *.hpp *.cpp
+prune test_aligned_faces
+prune tests
+global-exclude *.pyc
+global-exclude __pycache__
