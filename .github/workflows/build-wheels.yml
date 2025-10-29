@@ -32,8 +32,8 @@ jobs:
           # macOS: Build universal2 wheels (Intel + Apple Silicon)
           CIBW_ARCHS_MACOS: "x86_64 arm64 universal2"
 
-          # Linux: Build for x86_64 and aarch64
-          CIBW_ARCHS_LINUX: "x86_64 aarch64"
+          # Linux: Build for x86_64 only (aarch64 requires QEMU emulation)
+          CIBW_ARCHS_LINUX: "x86_64"
 
           # Windows: Build for x86_64 only
           CIBW_ARCHS_WINDOWS: "AMD64"
