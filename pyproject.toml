@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=42", "wheel", "pybind11>=2.6.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyfhog"
+version = "0.1.0"
+description = "Fast FHOG feature extraction for Python"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Boost Software License 1.0"}
+keywords = ["hog", "fhog", "feature-extraction", "computer-vision", "facial-analysis"]
+authors = [
+  {name = "SplitFace Project"}
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Image Recognition",
+  "Programming Language :: Python :: 3",
+]
+dependencies = [
+  "numpy>=1.20.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/splitface/pyfhog"
+Documentation = "https://github.com/splitface/pyfhog#readme"
+Repository = "https://github.com/splitface/pyfhog.git"
+Issues = "https://github.com/splitface/pyfhog/issues"
