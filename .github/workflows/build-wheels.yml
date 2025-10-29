@@ -45,6 +45,10 @@ jobs:
           CIBW_TEST_COMMAND: "python -c \"import pyfhog; import numpy as np; img = np.random.randint(0, 255, (112, 112, 3), dtype=np.uint8); features = pyfhog.extract_fhog_features(img); print('Test passed:', features.shape); assert features.shape == (4464,)\""
           CIBW_TEST_REQUIRES: "numpy"
 
+          # Skip testing ARM64 slice of universal2 wheels (known limitation)
+          # See: https://cibuildwheel.pypa.io/en/stable/faq/#universal2
+          CIBW_TEST_SKIP: "*-macosx_universal2:arm64"
+
       - uses: actions/upload-artifact@v4
         with:
           name: wheels-${{ matrix.os }}
