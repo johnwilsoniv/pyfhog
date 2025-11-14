@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/splitface/pyfhog"
-Documentation = "https://github.com/splitface/pyfhog#readme"
-Repository = "https://github.com/splitface/pyfhog.git"
-Issues = "https://github.com/splitface/pyfhog/issues"
+Homepage = "https://github.com/johnwilsoniv/pyfhog"
+Documentation = "https://github.com/johnwilsoniv/pyfhog#readme"
+Repository = "https://github.com/johnwilsoniv/pyfhog.git"
+Issues = "https://github.com/johnwilsoniv/pyfhog/issues"
