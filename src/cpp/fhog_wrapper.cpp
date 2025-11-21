@@ -7,27 +7,27 @@
 namespace py = pybind11;
 
 // Convert NumPy array to dlib image
-dlib::array2d<dlib::rgb_pixel> numpy_to_dlib_image(
+dlib::array2d<dlib::bgr_pixel> numpy_to_dlib_image(
     py::array_t<uint8_t> img_array
 ) {
     auto buf = img_array.request();
 
     if (buf.ndim != 3 || buf.shape[2] != 3) {
-        throw std::runtime_error("Input must be HxWx3 RGB image");
+        throw std::runtime_error("Input must be HxWx3 BGR image");
     }
 
     int height = buf.shape[0];
     int width = buf.shape[1];
 
-    dlib::array2d<dlib::rgb_pixel> img(height, width);
+    dlib::array2d<dlib::bgr_pixel> img(height, width);
     uint8_t* ptr = static_cast<uint8_t*>(buf.ptr);
 
     for (int r = 0; r < height; ++r) {
         for (int c = 0; c < width; ++c) {
             int idx = (r * width + c) * 3;
-            img[r][c].red = ptr[idx];
+            img[r][c].blue = ptr[idx];
             img[r][c].green = ptr[idx + 1];
-            img[r][c].blue = ptr[idx + 2];
+            img[r][c].red = ptr[idx + 2];
         }
     }
 
@@ -47,13 +47,13 @@ py::array_t<double> dlib_hog_to_numpy(
     auto buf = result.request();
     double* ptr = static_cast<double*>(buf.ptr);
 
-    // Flatten in same order as OpenFace (row, col, orientation)
-    // Row-major order: iterate rows first, then columns
+    // Flatten in same order as OpenFace (col, row, orientation)
+    // Column-major order: iterate columns first, then rows (matching OpenFace)
     int idx = 0;
-    for (int x = 0; x < num_rows; ++x) {
-        for (int y = 0; y < num_cols; ++y) {
+    for (int y = 0; y < num_cols; ++y) {
+        for (int x = 0; x < num_rows; ++x) {
             for (int o = 0; o < num_features; ++o) {
-                ptr[idx++] = hog[x][y](o);
+                ptr[idx++] = hog[x][y](o);  // hog is indexed as [row][col]
             }
         }
     }
@@ -88,19 +88,19 @@ PYBIND11_MODULE(_pyfhog, m) {
               Extract Felzenszwalb HOG features from an image.
 
               Args:
-                  image: NumPy array of shape (H, W, 3) in RGB format, dtype=uint8
+                  image: NumPy array of shape (H, W, 3) in BGR format (OpenCV default), dtype=uint8
                   cell_size: Size of HOG cells in pixels (default: 8)
 
               Returns:
-                  1D NumPy array of FHOG features (flattened)
+                  1D NumPy array of FHOG features (flattened in column-major order matching OpenFace)
 
               Example:
                   >>> import pyfhog
-                  >>> import numpy as np
-                  >>> img = np.random.randint(0, 255, (96, 96, 3), dtype=np.uint8)
+                  >>> import cv2
+                  >>> img = cv2.imread('face.jpg')  # BGR format
                   >>> features = pyfhog.extract_fhog_features(img)
                   >>> features.shape
-                  (4464,)  # For 96x96 image with cell_size=8
+                  (4464,)  # For 112x112 image with cell_size=8
           )pbdoc");
 
     m.attr("__version__") = "0.1.0";
