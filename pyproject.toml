@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyfhog"
-version = "0.1.1"
+version = "0.1.3"
 description = "Fast FHOG feature extraction for Python"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -28,3 +28,6 @@ Homepage = "https://github.com/johnwilsoniv/pyfhog"
 Documentation = "https://github.com/johnwilsoniv/pyfhog#readme"
 Repository = "https://github.com/johnwilsoniv/pyfhog.git"
 Issues = "https://github.com/johnwilsoniv/pyfhog/issues"
+
+[tool.setuptools]
+packages = ["pyfhog"]
