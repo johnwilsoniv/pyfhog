@@ -5,7 +5,7 @@ import platform
 import setuptools
 import pybind11
 
-__version__ = '0.1.1'
+__version__ = '0.1.3'
 
 # Determine include directories
 include_dirs = [
@@ -45,7 +45,6 @@ setup(
     long_description=open('README.md').read() if sys.path[0] else 'Fast FHOG feature extraction using dlib',
     long_description_content_type='text/markdown',
     packages=['pyfhog'],
-    package_dir={'': 'src'},
     ext_modules=ext_modules,
     install_requires=['numpy>=1.20.0'],
     python_requires='>=3.8',
