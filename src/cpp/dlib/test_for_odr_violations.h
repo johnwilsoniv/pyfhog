@@ -16,14 +16,13 @@ extern "C"
 // (e.g. by compiling part of your program in a debug mode and part in a release mode) or
 // you have simply forgotten to compile dlib/all/source.cpp into your application.
 // =========================>>> WHY YOU ARE GETTING AN ERROR HERE <<<=========================
-// DISABLED FOR PYFHOG: Header-only usage doesn't need ODR violation checking
-// #ifdef ENABLE_ASSERTS
-//     const extern int USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1;
-//     const int DLIB_NO_WARN_UNUSED dlib_check_assert_helper_variable = USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1;
-// #else
-//     const extern int USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1_;
-//     const int DLIB_NO_WARN_UNUSED dlib_check_assert_helper_variable = USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1_;
-// #endif
+#ifdef ENABLE_ASSERTS
+    const extern int USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1;
+    const int DLIB_NO_WARN_UNUSED dlib_check_assert_helper_variable = USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1;
+#else
+    const extern int USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1_;
+    const int DLIB_NO_WARN_UNUSED dlib_check_assert_helper_variable = USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1_;
+#endif
 
 
 
@@ -47,11 +46,10 @@ extern "C"
 
 // Cause the user to get a linker error if they try to use header files from one version of
 // dlib with the compiled binary from a different version of dlib.
-// DISABLED FOR PYFHOG: Header-only usage doesn't need version checking
-// #ifdef DLIB_CHECK_FOR_VERSION_MISMATCH
-//     const extern int DLIB_CHECK_FOR_VERSION_MISMATCH;
-//     const int DLIB_NO_WARN_UNUSED dlib_check_for_version_mismatch = DLIB_CHECK_FOR_VERSION_MISMATCH;
-// #endif
+#ifdef DLIB_CHECK_FOR_VERSION_MISMATCH
+    const extern int DLIB_CHECK_FOR_VERSION_MISMATCH;
+    const int DLIB_NO_WARN_UNUSED dlib_check_for_version_mismatch = DLIB_CHECK_FOR_VERSION_MISMATCH;
+#endif
 
 }
 
