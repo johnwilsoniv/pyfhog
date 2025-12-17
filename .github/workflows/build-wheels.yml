@@ -2,12 +2,15 @@ name: Build Wheels
 
 on:
   push:
-    branches: [ main ]
     tags:
       - 'v*'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+
+concurrency:
+  group: build-wheels-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build_wheels:
