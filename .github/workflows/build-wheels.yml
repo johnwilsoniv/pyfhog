@@ -14,8 +14,9 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-14]
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-13, macos-14]  # Windows disabled due to dlib linking issue
 
     steps:
       - uses: actions/checkout@v4
@@ -37,8 +38,8 @@ jobs:
           # Linux: Auto-detect native architecture (x86_64 on ubuntu-latest, aarch64 on ubuntu-24.04-arm)
           CIBW_ARCHS_LINUX: "auto"
 
-          # Windows: Build for x86_64 only
-          CIBW_ARCHS_WINDOWS: "AMD64"
+          # Windows disabled due to dlib linking issue (DLIB_VERSION_MISMATCH_CHECK)
+          # CIBW_ARCHS_WINDOWS: "AMD64"
 
           # Install build dependencies
           CIBW_BEFORE_BUILD: "pip install pybind11 numpy"
