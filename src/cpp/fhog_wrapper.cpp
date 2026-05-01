@@ -202,5 +202,5 @@ PYBIND11_MODULE(_pyfhog, m) {
                   (4464,)  # For 112x112 image with cell_size=8
           )pbdoc");
 
-    m.attr("__version__") = "0.1.0";
+    m.attr("__version__") = "0.1.4";
 }
