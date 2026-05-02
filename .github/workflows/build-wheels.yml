@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, macos-14]  # Windows/macos-13 disabled due to build issues
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-14, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -39,8 +39,11 @@ jobs:
           # Linux: Auto-detect native architecture (x86_64 on ubuntu-latest, aarch64 on ubuntu-24.04-arm)
           CIBW_ARCHS_LINUX: "auto"
 
-          # Windows disabled due to dlib linking issue (DLIB_VERSION_MISMATCH_CHECK)
-          # CIBW_ARCHS_WINDOWS: "AMD64"
+          # Windows: AMD64. The dlib ODR/version-mismatch sentinels in
+          # src/cpp/dlib/test_for_odr_violations.h are skipped on _MSC_VER
+          # since pyfhog uses dlib in header-only mode and never compiles
+          # dlib/all/source.cpp where the extern symbols would be defined.
+          CIBW_ARCHS_WINDOWS: "AMD64"
 
           # Install build dependencies
           CIBW_BEFORE_BUILD: "pip install pybind11 numpy"

@@ -1,11 +1,25 @@
 // Copyright (C) 2014  Davis E. King (davis@dlib.net)
 // License: Boost Software License   See LICENSE.txt for the full license.
+//
+// pyfhog Windows-MSVC fix: the ODR/version-mismatch sentinels below resolve at
+// link time to extern symbols defined in dlib/all/source.cpp. pyfhog uses dlib
+// in header-only mode and never compiles that source file, so on Windows MSVC
+// the link step fails with:
+//     fhog_wrapper.obj : error LNK2001: unresolved external symbol
+//         USER_ERROR__inconsistent_build_configuration__see_dlib_faq_1_
+//     fhog_wrapper.obj : error LNK2001: unresolved external symbol
+//         DLIB_VERSION_MISMATCH_CHECK__EXPECTED_VERSION_19_13_0
+// On macOS (clang) and Linux (gcc) the same code links cleanly because of how
+// COMDAT/weak-symbol resolution interacts with header-only includes there.
+// The sentinels exist purely to catch user build-configuration errors; their
+// absence on Windows is tolerable for a header-only consumer like pyfhog.
 #ifndef DLIB_TEST_FOR_ODR_VIOLATIONS_H_
 #define DLIB_TEST_FOR_ODR_VIOLATIONS_H_
 
 #include "assert.h"
 #include "config.h"
 
+#ifndef _MSC_VER
 extern "C"
 {
 // =========================>>> WHY YOU ARE GETTING AN ERROR HERE <<<=========================
@@ -52,6 +66,7 @@ extern "C"
 #endif
 
 }
+#endif // !_MSC_VER
 
 #endif // DLIB_TEST_FOR_ODR_VIOLATIONS_H_
 
