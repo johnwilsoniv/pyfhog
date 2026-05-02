@@ -5,7 +5,7 @@ import platform
 import setuptools
 import pybind11
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 # Determine include directories
 include_dirs = [
